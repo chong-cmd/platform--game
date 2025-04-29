@@ -1,6 +1,5 @@
 class Game {
     constructor() {
-        //清除最高分localStorage.removeItem('highScore'); 
         // 游戏元素
         this.container = document.querySelector('.game-container');
         this.player = new Player();
@@ -24,33 +23,6 @@ class Game {
         // 初始化
         this.highScoreElement.textContent = this.highScore;
         this.setupEventListeners();
-        // 新增二段跳指示器
-        this.doubleJumpIndicator = document.createElement('div');
-        this.doubleJumpIndicator.style.position = 'absolute';
-        this.doubleJumpIndicator.style.top = '20px';
-        this.doubleJumpIndicator.style.left = '50%';
-        this.doubleJumpIndicator.style.transform = 'translateX(-50%)';
-        this.doubleJumpIndicator.style.padding = '5px 10px';
-        this.doubleJumpIndicator.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
-        this.doubleJumpIndicator.style.borderRadius = '10px';
-        this.doubleJumpIndicator.textContent = '二段跳可用';
-        this.container.appendChild(this.doubleJumpIndicator);
-        this.updateJumpIndicator();
-    }
-
-    updateJumpIndicator() {
-        // 更新二段跳状态显示
-        if (this.player.jumpCount < 1) {
-            this.doubleJumpIndicator.style.display = 'block';
-            this.doubleJumpIndicator.textContent = '二段跳可用';
-            this.doubleJumpIndicator.style.color = '#4CAF50';
-        } else if (this.player.jumpCount < 2) {
-            this.doubleJumpIndicator.textContent = '最后一次跳跃';
-            this.doubleJumpIndicator.style.color = '#FF9800';
-        } else {
-            this.doubleJumpIndicator.style.display = 'none';
-        }
-    }
     }
     
     setupEventListeners() {
@@ -111,10 +83,6 @@ class Game {
     gameLoop() {
         if (!this.isRunning) return;
         
-        this.player.update();
-        this.updateJumpIndicator();  // 新增：每帧更新指示器
-        if (!this.isRunning) return;
-        
         // 更新玩家状态
         this.player.update();
         
@@ -156,17 +124,14 @@ class Game {
     }
     
     spawnObstacle() {
-    if (!this.isRunning) return;
-    
-    this.obstacles.push(new Obstacle(this.gameSpeed));
-    
-    // 修改这两个数值来调整间隔时间范围（单位：毫秒）
-    const minInterval = 3000; // 最小间隔（3秒）
-    const maxInterval = 6000; // 最大间隔（6秒）
-    const randomInterval = Math.random() * (maxInterval - minInterval) + minInterval;
-    
-    setTimeout(() => this.spawnObstacle(), randomInterval);
-}
+        if (!this.isRunning) return;
+        
+        this.obstacles.push(new Obstacle(this.gameSpeed));
+        
+        // 随机间隔生成障碍物 (1-2.5秒)
+        const randomInterval = Math.random() * 1500 + 1000;
+        setTimeout(() => this.spawnObstacle(), randomInterval);
+    }
     
     checkCollision(playerRect, obstacleRect) {
         return (
