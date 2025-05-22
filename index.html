@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跑酷游戏</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div id="player"></div>
+        <div class="score-display">
+            <span>分数: </span><span id="score">0</span>
+        </div>
+        <div class="highscore-display">
+            <span>最高分: </span><span id="highscore">0</span>
+        </div>
+        <div id="game-start" class="game-message">
+            <h1>跑酷游戏</h1>
+            <p>点击屏幕或按空格键开始</p>
+            <p>跳跃躲避障碍物</p>
+        </div>
+        <div id="game-over" class="game-message" style="display: none;">
+            <h1>游戏结束</h1>
+            <p>你的分数: <span id="final-score">0</span></p>
+            <p>tips:可能会有bug!请重新打开</p>
+            <button id="restart-btn">再玩一次</button>
+        </div>
+    </div>
+
+    <script src="js/obstacle.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
